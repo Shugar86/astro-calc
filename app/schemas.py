@@ -4,8 +4,9 @@ from __future__ import annotations
 
 from datetime import datetime
 from typing import Literal
+from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 HouseSystem = Literal[
     "placidus", "koch", "whole_sign", "equal", "regiomontanus", "campanus", "porphyry"
@@ -30,6 +31,24 @@ class SubjectIn(BaseModel):
     house_system: HouseSystem = "placidus"
     zodiac: Zodiac = "tropical"
     houses_mode: HousesMode = "full"
+
+    @field_validator("dt_utc")
+    @classmethod
+    def require_timezone_aware_datetime(cls, value: datetime) -> datetime:
+        """Reject ambiguous instants without an explicit UTC offset."""
+        if value.tzinfo is None or value.utcoffset() is None:
+            raise ValueError("dt_utc must include a UTC offset (for example, Z or +03:00)")
+        return value
+
+    @field_validator("tz")
+    @classmethod
+    def require_iana_timezone(cls, value: str) -> str:
+        """Reject timezone identifiers that cannot be resolved by IANA tzdata."""
+        try:
+            ZoneInfo(value)
+        except (ValueError, ZoneInfoNotFoundError) as exc:
+            raise ValueError("tz must be a valid IANA timezone") from exc
+        return value
 
 
 class NatalRequest(SubjectIn):

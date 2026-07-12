@@ -66,10 +66,10 @@ def _angle(cusp: dict[str, Any]) -> Angle:
 
 
 def map_angles(subject: dict[str, Any]) -> dict[str, Angle]:
-    """ASC = 1st house cusp, MC = 10th house cusp (quadrant house systems)."""
+    """Map true ASC / MC independently of the selected house system."""
     return {
-        "asc": _angle(subject["first_house"]),
-        "mc": _angle(subject["tenth_house"]),
+        "asc": _angle(subject["ascendant"]),
+        "mc": _angle(subject["medium_coeli"]),
     }
 
 

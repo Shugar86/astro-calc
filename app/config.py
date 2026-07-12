@@ -8,8 +8,8 @@ from __future__ import annotations
 
 import importlib.metadata
 
-# Bump on any change that affects returned numbers (positions, houses, aspects).
-CALC_VERSION = "1.0.0"
+# Bump on any change that affects returned numbers (positions, houses, angles, aspects).
+CALC_VERSION = "1.0.1"
 
 # Celestial points we compute, in a stable output order.
 # Sun–Pluto + Chiron + Mean Lilith + Mean North Node (per spec §4.2).
@@ -18,6 +18,10 @@ ACTIVE_POINTS: list[str] = [
     "Uranus", "Neptune", "Pluto", "Chiron", "Mean_Lilith",
     "Mean_North_Lunar_Node",
 ]
+
+# Angles calculated on the subject model, but excluded from public ``points``
+# and from aspect calculation.
+ANGLE_POINTS: list[str] = ["Ascendant", "Medium_Coeli"]
 
 # The 10 classical planets used for element / quality distributions.
 CLASSICAL_PLANETS: list[str] = [

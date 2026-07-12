@@ -10,6 +10,7 @@ from kerykeion.schemas.kr_models import AstrologicalSubjectModel
 
 from .config import (
     ACTIVE_POINTS,
+    ANGLE_POINTS,
     HOUSE_SYSTEMS,
     MAJOR_ASPECTS,
     ZODIAC_TYPES,
@@ -41,10 +42,8 @@ def _iso_utc(dt_utc: datetime, tz: str, *, noon: bool) -> str:
     In ``noon`` mode (birth time unknown) the clock time is discarded and the
     chart is computed for 12:00 local on the birth date — the standard
     convention that keeps fast-moving points near their mid-day best guess.
-    A naive ``dt_utc`` is interpreted as UTC.
+    ``dt_utc`` is guaranteed to be timezone-aware by the request contract.
     """
-    if dt_utc.tzinfo is None:
-        dt_utc = dt_utc.replace(tzinfo=timezone.utc)
     dt_utc = dt_utc.astimezone(timezone.utc)
     if noon:
         local_noon = dt_utc.astimezone(ZoneInfo(tz)).replace(
@@ -68,7 +67,7 @@ def _build_subject(subj: SubjectIn) -> AstrologicalSubjectModel:
         online=False,
         houses_system_identifier=HOUSE_SYSTEMS[subj.house_system],
         zodiac_type=ZODIAC_TYPES[subj.zodiac],
-        active_points=ACTIVE_POINTS,
+        active_points=[*ACTIVE_POINTS, *ANGLE_POINTS],
     )
 
 

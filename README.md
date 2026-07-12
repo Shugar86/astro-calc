@@ -39,7 +39,7 @@ curl -s http://localhost:8001/health | jq
 ### `GET /health`
 
 ```json
-{ "status": "ok", "versions": { "kerykeion": "5.x", "sweph": "2.10.03" }, "calc_version": "1.0.0" }
+{ "status": "ok", "versions": { "kerykeion": "5.x", "sweph": "2.10.03" }, "calc_version": "1.0.1" }
 ```
 
 ### `POST /v1/natal`
@@ -57,6 +57,10 @@ Request:
 }
 ```
 
+`dt_utc` must include an explicit UTC offset (`Z` is preferred), and `tz` must
+be a valid IANA timezone identifier. Naive datetimes and unknown timezones are
+rejected with HTTP 422.
+
 Response (abridged):
 
 ```json
@@ -72,14 +76,15 @@ Response (abridged):
                     "qualities": {"cardinal": 4, "fixed": 5, "mutable": 1}},
   "svg": "<svg ...>",
   "meta": {"house_system": "placidus", "zodiac": "tropical",
-           "engine": "kerykeion 5.x", "calc_version": "1.0.0", "time_unknown": false}
+           "engine": "kerykeion 5.x", "calc_version": "1.0.1", "time_unknown": false}
 }
 ```
 
 Points computed: Sun–Pluto, Chiron, Mean Lilith, Mean North Node. Aspects are
 **major only** (conjunction, opposition, trine, square, sextile). Distributions
-are integer counts over the 10 classical planets. Angles are derived from the
-1st/10th house cusps (ASC/MC).
+are integer counts over the 10 classical planets. ASC and MC use kerykeion's
+explicit `Ascendant` / `Medium_Coeli` points, so they stay independent of the
+selected house system.
 
 **Unknown birth time.** Set `"houses_mode": "noon_no_houses"`: the chart is
 computed for 12:00 local on the birth date, houses / ASC / MC and per-point
@@ -97,7 +102,8 @@ so a consumer recolors a chart by overriding those variables in its own
 stylesheet — no SVG string surgery required. kerykeion's built-in themes are a
 fixed set (`light`, `dark`, `classic`, `strawberry`, …); the service renders a
 neutral default and leaves palette customization to the caller. `svg_variant`
-is `wheel` (wheel only) or `full` (wheel + aspect grid).
+is `wheel` (wheel only) or `full` (wheel + aspect grid). Subject names are XML-
+escaped before rendering so the returned markup remains safe and well-formed.
 
 ## Golden tests
 
