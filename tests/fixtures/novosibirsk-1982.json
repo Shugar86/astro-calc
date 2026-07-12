@@ -1,0 +1,68 @@
+{
+  "slug": "novosibirsk-1982",
+  "note": "Bootstrap baseline from kerykeion 5.12.9 / sweph 2.10.03. PENDING manual verification against astro.com (spec 4.4). Replace `expected` with astro.com-confirmed degrees and set verified_against_astro_com=true; tolerances stay.",
+  "verified_against_astro_com": false,
+  "tolerances": {
+    "point_abs_deg": 0.01,
+    "house_cusp_abs_deg": 0.05
+  },
+  "input": {
+    "name": "Novosibirsk 1982",
+    "dt_utc": "1982-12-01T16:45:00Z",
+    "lat": 55.0084,
+    "lng": 82.9357,
+    "tz": "Asia/Novosibirsk"
+  },
+  "expected": {
+    "points": {
+      "sun": 249.1649,
+      "moon": 78.6542,
+      "mercury": 255.8048,
+      "venus": 255.9955,
+      "mars": 293.3612,
+      "jupiter": 234.8556,
+      "saturn": 210.2362,
+      "uranus": 245.1483,
+      "neptune": 266.1109,
+      "pluto": 208.4475,
+      "chiron": 54.4651,
+      "lilith": 288.1623,
+      "north_node": 95.4605
+    },
+    "houses": {
+      "1": 149.4421,
+      "2": 167.9782,
+      "3": 192.9818,
+      "4": 226.8635,
+      "5": 267.3724,
+      "6": 302.5083,
+      "7": 329.4421,
+      "8": 347.9782,
+      "9": 12.9818,
+      "10": 46.8635,
+      "11": 87.3724,
+      "12": 122.5083
+    },
+    "aspects": [
+      "chiron|jupiter|opposition",
+      "chiron|lilith|trine",
+      "chiron|mars|trine",
+      "jupiter|mars|sextile",
+      "lilith|mars|conjunction",
+      "mercury|moon|opposition",
+      "mercury|sun|conjunction",
+      "mercury|venus|conjunction",
+      "moon|neptune|opposition",
+      "moon|sun|opposition",
+      "moon|venus|opposition",
+      "neptune|north_node|opposition",
+      "neptune|pluto|sextile",
+      "neptune|saturn|sextile",
+      "north_node|pluto|trine",
+      "north_node|saturn|trine",
+      "pluto|saturn|conjunction",
+      "sun|uranus|conjunction",
+      "sun|venus|conjunction"
+    ]
+  }
+}

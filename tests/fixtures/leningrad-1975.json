@@ -1,0 +1,70 @@
+{
+  "slug": "leningrad-1975",
+  "note": "Bootstrap baseline from kerykeion 5.12.9 / sweph 2.10.03. PENDING manual verification against astro.com (spec 4.4). Replace `expected` with astro.com-confirmed degrees and set verified_against_astro_com=true; tolerances stay.",
+  "verified_against_astro_com": false,
+  "tolerances": {
+    "point_abs_deg": 0.01,
+    "house_cusp_abs_deg": 0.05
+  },
+  "input": {
+    "name": "Leningrad 1975",
+    "dt_utc": "1975-06-20T04:15:00Z",
+    "lat": 59.9375,
+    "lng": 30.3086,
+    "tz": "Europe/Moscow"
+  },
+  "expected": {
+    "points": {
+      "sun": 88.2435,
+      "moon": 224.5218,
+      "mercury": 75.2397,
+      "venus": 133.6038,
+      "mars": 22.0955,
+      "jupiter": 20.0513,
+      "saturn": 109.2489,
+      "uranus": 208.4823,
+      "neptune": 249.9308,
+      "pluto": 186.4837,
+      "chiron": 27.3914,
+      "lilith": 345.0934,
+      "north_node": 239.5846
+    },
+    "houses": {
+      "1": 125.6316,
+      "2": 138.2647,
+      "3": 155.5923,
+      "4": 181.9822,
+      "5": 224.2654,
+      "6": 273.7195,
+      "7": 305.6316,
+      "8": 318.2647,
+      "9": 335.5923,
+      "10": 1.9822,
+      "11": 44.2654,
+      "12": 93.7195
+    },
+    "aspects": [
+      "chiron|jupiter|conjunction",
+      "chiron|mars|conjunction",
+      "chiron|sun|sextile",
+      "chiron|uranus|opposition",
+      "jupiter|mars|conjunction",
+      "jupiter|mercury|sextile",
+      "jupiter|saturn|square",
+      "jupiter|uranus|opposition",
+      "jupiter|venus|trine",
+      "lilith|mercury|square",
+      "lilith|moon|trine",
+      "lilith|saturn|trine",
+      "mars|saturn|square",
+      "mars|uranus|opposition",
+      "mercury|neptune|opposition",
+      "mercury|venus|sextile",
+      "moon|saturn|trine",
+      "moon|venus|square",
+      "neptune|pluto|sextile",
+      "neptune|venus|trine",
+      "sun|uranus|trine"
+    ]
+  }
+}

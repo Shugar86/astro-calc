@@ -1,0 +1,72 @@
+{
+  "slug": "moscow-1993",
+  "note": "Bootstrap baseline from kerykeion 5.12.9 / sweph 2.10.03. PENDING manual verification against astro.com (spec 4.4). Replace `expected` with astro.com-confirmed degrees and set verified_against_astro_com=true; tolerances stay.",
+  "verified_against_astro_com": false,
+  "tolerances": {
+    "point_abs_deg": 0.01,
+    "house_cusp_abs_deg": 0.05
+  },
+  "input": {
+    "name": "Moscow 1993",
+    "dt_utc": "1993-09-09T12:20:00Z",
+    "lat": 55.7558,
+    "lng": 37.6173,
+    "tz": "Europe/Moscow"
+  },
+  "expected": {
+    "points": {
+      "sun": 166.8293,
+      "moon": 79.6923,
+      "mercury": 176.6355,
+      "venus": 135.3654,
+      "mars": 198.2989,
+      "jupiter": 196.8138,
+      "saturn": 325.4601,
+      "uranus": 288.3621,
+      "neptune": 288.4913,
+      "pluto": 233.1183,
+      "chiron": 150.7663,
+      "lilith": 6.6734,
+      "north_node": 247.1068
+    },
+    "houses": {
+      "1": 262.7163,
+      "2": 310.0657,
+      "3": 1.6307,
+      "4": 33.4062,
+      "5": 53.6347,
+      "6": 68.9171,
+      "7": 82.7163,
+      "8": 130.0657,
+      "9": 181.6307,
+      "10": 213.4062,
+      "11": 233.6347,
+      "12": 248.9171
+    },
+    "aspects": [
+      "chiron|saturn|opposition",
+      "jupiter|mars|conjunction",
+      "jupiter|moon|trine",
+      "jupiter|neptune|square",
+      "jupiter|uranus|square",
+      "jupiter|venus|sextile",
+      "lilith|north_node|trine",
+      "mars|moon|trine",
+      "mars|neptune|square",
+      "mars|saturn|trine",
+      "mars|uranus|square",
+      "mars|venus|sextile",
+      "mercury|pluto|sextile",
+      "mercury|sun|conjunction",
+      "moon|saturn|trine",
+      "moon|sun|square",
+      "moon|venus|sextile",
+      "neptune|pluto|sextile",
+      "neptune|sun|trine",
+      "neptune|uranus|conjunction",
+      "pluto|saturn|square",
+      "pluto|uranus|sextile",
+      "sun|uranus|trine"
+    ]
+  }
+}

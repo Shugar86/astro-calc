@@ -1,0 +1,77 @@
+{
+  "slug": "kazan-1988",
+  "note": "Bootstrap baseline from kerykeion 5.12.9 / sweph 2.10.03. PENDING manual verification against astro.com (spec 4.4). Replace `expected` with astro.com-confirmed degrees and set verified_against_astro_com=true; tolerances stay.",
+  "verified_against_astro_com": false,
+  "tolerances": {
+    "point_abs_deg": 0.01,
+    "house_cusp_abs_deg": 0.05
+  },
+  "input": {
+    "name": "Kazan 1988",
+    "dt_utc": "1988-03-14T09:30:00Z",
+    "lat": 55.7887,
+    "lng": 49.1221,
+    "tz": "Europe/Moscow"
+  },
+  "expected": {
+    "points": {
+      "sun": 354.0216,
+      "moon": 302.6608,
+      "mercury": 327.4382,
+      "venus": 38.8286,
+      "mars": 284.1462,
+      "jupiter": 31.2147,
+      "saturn": 271.9263,
+      "uranus": 270.8487,
+      "neptune": 279.9757,
+      "pluto": 222.3463,
+      "chiron": 83.2667,
+      "lilith": 143.2934,
+      "north_node": 353.2815
+    },
+    "houses": {
+      "1": 122.946,
+      "2": 137.5363,
+      "3": 156.6282,
+      "4": 184.185,
+      "5": 224.7812,
+      "6": 270.238,
+      "7": 302.946,
+      "8": 317.5363,
+      "9": 336.6282,
+      "10": 4.185,
+      "11": 44.7812,
+      "12": 90.238
+    },
+    "aspects": [
+      "chiron|lilith|sextile",
+      "chiron|mercury|trine",
+      "chiron|north_node|square",
+      "chiron|saturn|opposition",
+      "chiron|sun|square",
+      "chiron|uranus|opposition",
+      "jupiter|lilith|trine",
+      "jupiter|mercury|sextile",
+      "jupiter|moon|square",
+      "jupiter|saturn|trine",
+      "jupiter|uranus|trine",
+      "jupiter|venus|conjunction",
+      "lilith|mercury|opposition",
+      "lilith|uranus|trine",
+      "mars|neptune|conjunction",
+      "mars|pluto|sextile",
+      "mars|venus|trine",
+      "mercury|saturn|sextile",
+      "mercury|uranus|sextile",
+      "neptune|pluto|sextile",
+      "neptune|saturn|conjunction",
+      "neptune|uranus|conjunction",
+      "neptune|venus|trine",
+      "north_node|sun|conjunction",
+      "pluto|venus|opposition",
+      "saturn|uranus|conjunction",
+      "saturn|venus|trine",
+      "uranus|venus|trine"
+    ]
+  }
+}

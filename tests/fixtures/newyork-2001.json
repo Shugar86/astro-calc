@@ -1,0 +1,71 @@
+{
+  "slug": "newyork-2001",
+  "note": "Bootstrap baseline from kerykeion 5.12.9 / sweph 2.10.03. PENDING manual verification against astro.com (spec 4.4). Replace `expected` with astro.com-confirmed degrees and set verified_against_astro_com=true; tolerances stay.",
+  "verified_against_astro_com": false,
+  "tolerances": {
+    "point_abs_deg": 0.01,
+    "house_cusp_abs_deg": 0.05
+  },
+  "input": {
+    "name": "New York 2001",
+    "dt_utc": "2001-05-05T07:05:00Z",
+    "lat": 40.7128,
+    "lng": -74.006,
+    "tz": "America/New_York"
+  },
+  "expected": {
+    "points": {
+      "sun": 44.8522,
+      "moon": 195.4794,
+      "mercury": 58.2413,
+      "venus": 5.4399,
+      "mars": 268.8046,
+      "jupiter": 74.4127,
+      "saturn": 61.7643,
+      "uranus": 324.5954,
+      "neptune": 308.7682,
+      "pluto": 254.6887,
+      "chiron": 268.3575,
+      "lilith": 317.8002,
+      "north_node": 99.1029
+    },
+    "houses": {
+      "1": 335.3076,
+      "2": 22.1298,
+      "3": 53.4776,
+      "4": 76.6196,
+      "5": 97.5709,
+      "6": 121.1357,
+      "7": 155.3076,
+      "8": 202.1298,
+      "9": 233.4776,
+      "10": 256.6196,
+      "11": 277.5709,
+      "12": 301.1357
+    },
+    "aspects": [
+      "chiron|mars|conjunction",
+      "chiron|uranus|sextile",
+      "jupiter|lilith|trine",
+      "jupiter|moon|trine",
+      "jupiter|neptune|trine",
+      "jupiter|pluto|opposition",
+      "lilith|moon|trine",
+      "lilith|neptune|conjunction",
+      "lilith|pluto|sextile",
+      "lilith|sun|square",
+      "lilith|uranus|conjunction",
+      "mars|uranus|sextile",
+      "mercury|saturn|conjunction",
+      "mercury|uranus|square",
+      "moon|neptune|trine",
+      "moon|pluto|sextile",
+      "neptune|pluto|sextile",
+      "neptune|saturn|trine",
+      "neptune|venus|sextile",
+      "north_node|sun|sextile",
+      "north_node|venus|square",
+      "saturn|venus|sextile"
+    ]
+  }
+}
