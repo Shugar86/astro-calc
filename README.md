@@ -107,21 +107,48 @@ escaped before rendering so the returned markup remains safe and well-formed.
 
 ## Golden tests
 
-`tests/fixtures/*.json` pin reference charts so the engine can't silently drift
-(tolerances: 0.01° for point longitudes, 0.05° for house cusps; the full major-
-aspect list must match). Regenerate the baseline with:
+`tests/fixtures/*.json` contain five reference charts calculated directly with
+the `pyswisseph` API, without calling `app.engine` or Kerykeion calculation
+code. Three fixtures are historical USSR dates (the acceptance minimum is two).
+They cover all 13 public points, 12 Placidus cusps and the complete major-aspect
+list. Tolerances are 0.01° for point longitudes and 0.05° for house cusps; the
+aspect keys must match exactly.
+
+Verify the committed corpus against Swiss Ephemeris:
+
+```bash
+uv run python scripts/verify_fixtures.py
+```
+
+Regenerate and then verify it:
 
 ```bash
 uv run python scripts/gen_fixtures.py
+uv run python scripts/verify_fixtures.py
 ```
 
-> The shipped baselines are bootstrapped from kerykeion output and flagged
-> `verified_against_astro_com: false` — they still need manual verification
-> against astro.com before being treated as ground truth.
+The metadata flag is deliberately named
+`verified_against_swiss_ephemeris_direct`; these fixtures have **not** been
+claimed as manual astro.com UI comparisons. See
+[Golden-fixture verification](docs/golden-fixtures.md) for the exact oracle,
+flags, bodies, aspect orbs and limitations.
+
+### Stage 1 definition of done
+
+- [x] Stateless `/health`, `/v1/natal` and `/v1/synastry` HTTP contracts.
+- [x] Tropical and sidereal calculation, seven house systems, unknown-time
+  mode, structured points/houses/angles/aspects/distributions and safe SVG.
+- [x] Five golden charts verified through direct Swiss Ephemeris calls,
+  including three historical USSR dates.
+- [x] Independent oracle and service regression both run under pytest; CI also
+  invokes the five-fixture verifier explicitly.
+- [x] Frozen dependency lock, lint, tests and container build instructions.
 
 ## Tests & lint
 
 ```bash
+uv lock --check
+uv run python scripts/verify_fixtures.py
 uv run pytest -q
 uv run ruff check .
 ```

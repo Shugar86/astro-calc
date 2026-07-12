@@ -41,6 +41,7 @@ dependencies = [
     { name = "fastapi" },
     { name = "kerykeion" },
     { name = "pydantic" },
+    { name = "pyswisseph" },
     { name = "uvicorn", extra = ["standard"] },
 ]
 
@@ -57,6 +58,7 @@ requires-dist = [
     { name = "httpx", marker = "extra == 'dev'", specifier = ">=0.27" },
     { name = "kerykeion", specifier = ">=5,<6" },
     { name = "pydantic", specifier = ">=2.9" },
+    { name = "pyswisseph", specifier = ">=2.10.3.2,<3" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.3" },
     { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.7" },
     { name = "uvicorn", extras = ["standard"], specifier = ">=0.32" },

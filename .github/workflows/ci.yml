@@ -23,5 +23,8 @@ jobs:
       - name: Lint (ruff)
         run: uv run ruff check .
 
+      - name: Verify 5 direct Swiss Ephemeris fixtures (including USSR dates)
+        run: uv run python scripts/verify_fixtures.py
+
       - name: Test (pytest — includes golden-chart regression)
         run: uv run pytest -q

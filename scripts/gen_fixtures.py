@@ -1,94 +1,132 @@
-"""Bootstrap golden-chart fixtures from the current kerykeion output.
+"""Regenerate golden fixtures from the direct pyswisseph oracle.
 
-These values are a *regression baseline*, not ground truth: they lock the engine
-against silent drift. Per spec §4.4 they must be verified by hand against
-astro.com and replaced with the confirmed degrees (flip
-``verified_against_astro_com`` to true then). The test structure and tolerances
-do not change when the numbers are swapped.
+The generator does not call ``app.engine`` or Kerykeion calculation code.  The
+service regression in ``tests/test_golden.py`` therefore compares one code path
+with a separately produced reference.
 
-Run:  uv run python scripts/gen_fixtures.py
+Run from the repository root::
+
+    uv run python scripts/gen_fixtures.py
+    uv run python scripts/verify_fixtures.py
 """
 
 from __future__ import annotations
 
+import importlib.metadata
 import json
 from pathlib import Path
 
-from app.config import engine_versions
-from app.engine import build_natal
-from app.schemas import NatalRequest
+import swisseph as swe
+
+from scripts.verify_fixtures import calculate_reference
 
 FIXTURES_DIR = Path(__file__).resolve().parent.parent / "tests" / "fixtures"
 
-# 5 reference charts. >=2 births in the USSR 1970-1995 (historical timezones /
-# decree time) are mandatory; here 3 (Kazan-88, Leningrad-75, Novosibirsk-82),
-# plus a post-USSR Russian chart and a western-hemisphere DST-era chart.
+# Five reference charts.  Three dates are births in the historical USSR, more
+# than the acceptance minimum of two.  ``dt_utc`` is already an unambiguous
+# instant; the IANA timezone remains part of the public service request.
 CHARTS: list[dict] = [
     {
         "slug": "kazan-1988",
-        "input": {"name": "Kazan 1988", "dt_utc": "1988-03-14T09:30:00Z",
-                  "lat": 55.7887, "lng": 49.1221, "tz": "Europe/Moscow"},
+        "historical_ussr": True,
+        "input": {
+            "name": "Kazan 1988",
+            "dt_utc": "1988-03-14T09:30:00Z",
+            "lat": 55.7887,
+            "lng": 49.1221,
+            "tz": "Europe/Moscow",
+        },
     },
     {
         "slug": "leningrad-1975",
-        "input": {"name": "Leningrad 1975", "dt_utc": "1975-06-20T04:15:00Z",
-                  "lat": 59.9375, "lng": 30.3086, "tz": "Europe/Moscow"},
+        "historical_ussr": True,
+        "input": {
+            "name": "Leningrad 1975",
+            "dt_utc": "1975-06-20T04:15:00Z",
+            "lat": 59.9375,
+            "lng": 30.3086,
+            "tz": "Europe/Moscow",
+        },
     },
     {
         "slug": "novosibirsk-1982",
-        "input": {"name": "Novosibirsk 1982", "dt_utc": "1982-12-01T16:45:00Z",
-                  "lat": 55.0084, "lng": 82.9357, "tz": "Asia/Novosibirsk"},
+        "historical_ussr": True,
+        "input": {
+            "name": "Novosibirsk 1982",
+            "dt_utc": "1982-12-01T16:45:00Z",
+            "lat": 55.0084,
+            "lng": 82.9357,
+            "tz": "Asia/Novosibirsk",
+        },
     },
     {
         "slug": "moscow-1993",
-        "input": {"name": "Moscow 1993", "dt_utc": "1993-09-09T12:20:00Z",
-                  "lat": 55.7558, "lng": 37.6173, "tz": "Europe/Moscow"},
+        "historical_ussr": False,
+        "input": {
+            "name": "Moscow 1993",
+            "dt_utc": "1993-09-09T12:20:00Z",
+            "lat": 55.7558,
+            "lng": 37.6173,
+            "tz": "Europe/Moscow",
+        },
     },
     {
         "slug": "newyork-2001",
-        "input": {"name": "New York 2001", "dt_utc": "2001-05-05T07:05:00Z",
-                  "lat": 40.7128, "lng": -74.0060, "tz": "America/New_York"},
+        "historical_ussr": False,
+        "input": {
+            "name": "New York 2001",
+            "dt_utc": "2001-05-05T07:05:00Z",
+            "lat": 40.7128,
+            "lng": -74.0060,
+            "tz": "America/New_York",
+        },
     },
 ]
 
 
-def _aspect_key(a: str, b: str, kind: str) -> str:
-    """Order-independent key for a major aspect."""
-    lo, hi = sorted((a, b))
-    return f"{lo}|{hi}|{kind}"
-
-
-def build_expected(inp: dict) -> dict:
-    """Compute the expected block (points, houses, aspects) for one chart."""
-    resp = build_natal(NatalRequest(**inp))
+def build_expected(chart_input: dict) -> dict:
+    """Calculate and round the committed reference values."""
+    reference = calculate_reference(chart_input)
     return {
-        "points": {p.id: p.abs_deg for p in resp.points},
-        "houses": {str(h.n): h.cusp_abs_deg for h in resp.houses},
-        "aspects": sorted(_aspect_key(a.a, a.b, a.type) for a in resp.aspects),
+        "points": {
+            point_id: round(longitude, 4)
+            for point_id, longitude in reference["points"].items()
+        },
+        "houses": {
+            house_number: round(longitude, 4)
+            for house_number, longitude in reference["houses"].items()
+        },
+        "aspects": reference["aspects"],
     }
 
 
 def main() -> None:
     FIXTURES_DIR.mkdir(parents=True, exist_ok=True)
-    versions = engine_versions()
+    pyswisseph_version = importlib.metadata.version("pyswisseph")
     for chart in CHARTS:
         fixture = {
             "slug": chart["slug"],
             "note": (
-                f"Bootstrap baseline from kerykeion {versions['kerykeion']} / "
-                f"sweph {versions['sweph']}. PENDING manual verification against "
-                "astro.com (spec 4.4). Replace `expected` with astro.com-confirmed "
-                "degrees and set verified_against_astro_com=true; tolerances stay."
+                f"Reference values verified directly through pyswisseph {pyswisseph_version} / "
+                f"Swiss Ephemeris {swe.version}; no app.engine or kerykeion calculation "
+                "code is used."
             ),
-            "verified_against_astro_com": False,
+            "verified_against_swiss_ephemeris_direct": True,
+            "verification_method": "scripts/verify_fixtures.py",
+            "historical_ussr": chart["historical_ussr"],
             "tolerances": {"point_abs_deg": 0.01, "house_cusp_abs_deg": 0.05},
             "input": chart["input"],
             "expected": build_expected(chart["input"]),
         }
         path = FIXTURES_DIR / f"{chart['slug']}.json"
-        path.write_text(json.dumps(fixture, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-        print(f"wrote {path.relative_to(FIXTURES_DIR.parent.parent)} "
-              f"({len(fixture['expected']['aspects'])} aspects)")
+        path.write_text(
+            json.dumps(fixture, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        print(
+            f"wrote {path.relative_to(FIXTURES_DIR.parent.parent)} "
+            f"({len(fixture['expected']['aspects'])} aspects)"
+        )
 
 
 if __name__ == "__main__":

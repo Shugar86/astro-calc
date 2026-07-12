@@ -1,9 +1,9 @@
-"""Golden-chart regression: the engine must not drift from the locked baselines.
+"""Engine regression against the direct Swiss Ephemeris golden fixtures.
 
-Fixtures are bootstrapped from kerykeion and PENDING manual verification against
-astro.com (see scripts/gen_fixtures.py and each fixture's `note`). Tolerances
-live in the fixture: 0.01 deg for point longitudes, 0.05 deg for house cusps.
-Any drift beyond tolerance fails the test.
+The independent oracle is tested in ``test_swiss_ephemeris_oracle.py``.  This
+module exercises the service implementation and compares it with those locked
+references.  Tolerances live in each fixture: 0.01 degree for point longitudes
+and 0.05 degree for house cusps; the major-aspect list must match exactly.
 """
 
 from __future__ import annotations

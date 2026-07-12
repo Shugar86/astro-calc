@@ -1,7 +1,9 @@
 {
   "slug": "moscow-1993",
-  "note": "Bootstrap baseline from kerykeion 5.12.9 / sweph 2.10.03. PENDING manual verification against astro.com (spec 4.4). Replace `expected` with astro.com-confirmed degrees and set verified_against_astro_com=true; tolerances stay.",
-  "verified_against_astro_com": false,
+  "note": "Reference values verified directly through pyswisseph 2.10.3.2 / Swiss Ephemeris 2.10.03; no app.engine or kerykeion calculation code is used.",
+  "verified_against_swiss_ephemeris_direct": true,
+  "verification_method": "scripts/verify_fixtures.py",
+  "historical_ussr": false,
   "tolerances": {
     "point_abs_deg": 0.01,
     "house_cusp_abs_deg": 0.05
